@@ -38,6 +38,14 @@ namespace CatalogoAPI.Controllers
 
             return Ok(categoria);
         }
+        [HttpGet("produtos")]
+        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
+        {
+            List<Categoria> categorias = _context.Categorias.Include(c => c.Produtos).ToList();
+            if (!categorias.Any()) { return NotFound(); }
+
+            return Ok(categorias);
+        }
         [HttpPost]
         public ActionResult Post([FromBody] Categoria categoria)
         {
