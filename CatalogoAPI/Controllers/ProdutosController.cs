@@ -25,14 +25,14 @@ namespace CatalogoAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            List<Produto> produtos = _context.Produtos.ToList();
+            List<Produto> produtos = _context.Produtos.AsNoTracking().ToList();
             if (!produtos.Any()) { return NotFound(); }
             return Ok(produtos);
         }
         [HttpGet("{id:int}", Name = "ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
-            Produto? produto = _context.Produtos.FirstOrDefault(p => p.Id == id);
+            Produto? produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.Id == id);
             if (produto is null) { return NotFound("Produto não encontrado..."); }
             return produto;
         }
